@@ -5,7 +5,9 @@ window.addEventListener('load', (event) => {
 
 let plays =
 {
-  "hamlet": { "name": "Hamlet", "type": "tragedy" }, "as-like": { "name": "As You Like It", "type": "comedy" }, "othello": { "name": "Othello", "type": "tragedy" }
+  "hamlet": { "name": "Hamlet", "type": "tragedy" },
+  "as-like": { "name": "As You Like It", "type": "comedy" },
+  "othello": { "name": "Othello", "type": "tragedy" }
 }
 
 let invoices =
@@ -28,21 +30,11 @@ let invoices =
     }
   ]
 
-let localData = () => {
-  fetch('./data.json')
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (resData) {
-      console.log('localData: ', resData);
-    })
-}
-
-
 function statement(invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
-  let result = `=========================\n Statement for ${invoice.customer}\n`; const format = new Intl.NumberFormat("en-US",
+  let result = `<h1 class='title'>Statement for ${invoice.customer}\n</h1>`;
+  const format = new Intl.NumberFormat("en-US",
     { style: "currency", currency: "USD", minimumFractionDigits: 2 }).format;
 
   for (let perf of invoice.performances) {
@@ -67,16 +59,17 @@ function statement(invoice, plays) {
     }
     // add volume credits
     volumeCredits += Math.max(perf.audience - 30, 0);
+
     // add extra credit for every ten comedy attendees
     if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
+
     // print line for this order
-    result += ` ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`; totalAmount += thisAmount;
+    result += `<p>   ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n </p>`;
+    totalAmount += thisAmount;
   }
-  result += '=========================\n'
   result += `Amount owed is ${format(totalAmount / 100)}\n`;
   result += `You earned ${volumeCredits} credits\n`;
-  result += '=========================\n'
   let main = document.getElementById('main')
-  main.innerText = result;
+  main.innerHTML = result;
   return result;
 }
