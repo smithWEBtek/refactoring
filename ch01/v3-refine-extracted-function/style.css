@@ -1,0 +1,32 @@
+p {
+  border: 1px solid gray;
+  border-radius: 1rem;
+  margin-left: 1rem;
+  padding: .2rem .2rem .2rem .2rem;
+  width: 18rem;
+}
+
+.title {
+  font-size: x-large;
+}
+
+.load {
+  border-radius: 8px;
+  font-size: medium;
+  background-color: lightgreen;
+}
+
+.clear {
+  border-radius: 8px;
+  font-size: medium;
+  background-color:rgb(240, 240, 16);
+}
+
+.display {
+  border-bottom: 1px solid gray;
+  align-items: center;
+}
+
+.display__button {
+
+}
